@@ -135,24 +135,16 @@ if shablon_file is not None and uploaded_file is not None:
                 sheet[f"F{31 + i}"] = ders_verisi.iloc[0]["MüəllimMS"]
                 sheet[f"G{31 + i}"] = ders_verisi.iloc[0]["Fənn_qrupuMS"]
 
-            # Payız semestr toplamını hesapla ve yaz
-            payiz_toplam = sum(
-                [
-                    sheet[f"D{19 + i}"].value or 0
-                    for i in range(len(payiz_veriler_sirali))
-                ]
-            )
-            sheet[f"D{19 + len(payiz_veriler_sirali)}"] = payiz_toplam
+            # Payız semestr toplamını E33 hücresine yazma
+            e23_e32_toplam = sum([sheet[f"D{19 + i}"].value or 0 for i in range(len(payiz_veriler_sirali))])
+            sheet["D29"] = e23_e32_toplam
 
-            # Yaz semestr toplamını hesapla ve yaz
-            yaz_toplam = sum(
-                [sheet[f"D{31 + i}"].value or 0 for i in range(len(yaz_veriler_sirali))]
-            )
-            sheet[f"D{31 + len(yaz_veriler_sirali)}"] = yaz_toplam
+            # Yaz semestr toplamını E45 hücresine yazma
+            e35_e44_toplam = sum([sheet[f"D{31 + i}"].value or 0 for i in range(len(yaz_veriler_sirali))])
+            sheet["D41"] = e35_e44_toplam
 
             # Yaz semestrindeki boş satırları sil
             sil_bos_satirlar(sheet, 31, 40)
-
             # Payız semestrindeki boş satırları sil
             sil_bos_satirlar(sheet, 19, 28)
 
